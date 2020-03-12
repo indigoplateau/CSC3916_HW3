@@ -49,6 +49,16 @@ router.route('/users')
         });
     });
 
+router.route('/test')
+    .get( function (req, res) {
+        var hey = {
+            headers : "No Headers",
+            key: process.env.UNIQUE_KEY,
+            body : "No Body"
+        };
+        res.json(hey);
+    });
+
 router.post('/signup', function(req, res) {
     if (!req.body.username || !req.body.password) {
         res.json({success: false, message: 'Please pass username and password.'});
