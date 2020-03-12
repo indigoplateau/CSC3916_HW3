@@ -52,9 +52,8 @@ router.route('/users')
 router.route('/test')
     .get( function (req, res) {
         var hey = {
-            headers : "No Headers",
-            key: process.env.UNIQUE_KEY,
-            body : "No Body"
+            headers : "help",
+            body : "No Body help"
         };
         res.json(hey);
     });
