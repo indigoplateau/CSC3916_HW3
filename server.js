@@ -70,7 +70,7 @@ router.route('/movies')
 
         res.json(getJSONObjectWithMessage(req,"movie updated"));
     })
-    .delete(authController.isAuthenticated, function (req, res) {
+    .delete( function (req, res) {
 
         console.log(req.body);
         res = res.status(200);
