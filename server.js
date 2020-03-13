@@ -16,6 +16,75 @@ app.use(passport.initialize());
 
 var router = express.Router();
 
+function getJSONObjectWithMessage(req, inputMessage) {
+    var json = {
+        headers : "No Headers",
+        key: process.env.UNIQUE_KEY,
+        body : "No Body"
+    };
+
+    if (req.body != null) {
+        json.body = req.body;
+    }
+    if (req.headers != null) {
+        json.headers = { status: 200, message: inputMessage, headers: req.headers, query: req.body.q, env: process.env.UNIQUE_KEY };
+    }
+
+    return json;
+}
+
+router.route('/movies')
+    .get( function (req, res) {
+        console.log(req.body);
+        res = res.status(200);
+
+        if (req.get('Content-Type')) {
+            console.log("Content-Type: " + req.get('Content-Type'));
+            res = res.type(req.get('Content-Type'));
+        }
+
+        res.json(getJSONObjectWithMessage(req, "GET movies" ));
+    })
+    .post(function (req, res) {
+
+        console.log(req.body);
+        res = res.status(200);
+
+        if (req.get('Content-Type')) {
+            console.log("Content-Type: " + req.get('Content-Type'));
+            res = res.type(req.get('Content-Type'));
+        }
+
+
+        res.json(getJSONObjectWithMessage(req, "movie saved" ));
+    })
+    .put(authJwtController.isAuthenticated, function (req, res) {
+        console.log(req.body);
+        res = res.status(200);
+
+        if (req.get('Content-Type')) {
+            console.log("Content-Type: " + req.get('Content-Type'));
+            res = res.type(req.get('Content-Type'));
+        }
+
+
+        res.json(getJSONObjectWithMessage(req,"movie updated"));
+    })
+    .delete(authController.isAuthenticated, function (req, res) {
+
+        console.log(req.body);
+        res = res.status(200);
+
+        if (req.get('Content-Type')) {
+            console.log("Content-Type: " + req.get('Content-Type'));
+            res = res.type(req.get('Content-Type'));
+        }
+
+
+        res.json(getJSONObjectWithMessage(req,"movie deleted"));
+    });
+
+
 router.route('/postjwt')
     .post(authJwtController.isAuthenticated, function (req, res) {
             console.log(req.body);
